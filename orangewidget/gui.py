@@ -1768,27 +1768,20 @@ else:
     DeferredFunc = Any
 
 
-if sys.version_info >= (3, 7):
-    from typing import Optional, Callable
-    from dataclasses import dataclass
+from typing import Optional, Callable
+from dataclasses import dataclass
 
-    @dataclass
-    class DeferredData:
-        # now and deferred are set by auto_commit
-        now: Optional[Callable] = None
-        deferred: Optional[Callable] = None
-        # if True, data was changed while auto was disabled,
-        # so enabling auto commit must call `func`
-        dirty: bool = False
-        # A flag (counter) telling that we're within commit and
-        # super().commit() should not raise an exception
-        commit_depth: int = 0
-else:
-    class DeferredData:
-        def __init__(self):
-            self.now = self.deferred = None
-            self.dirty = False
-            self.commit_depth = 0
+@dataclass
+class DeferredData:
+    # now and deferred are set by auto_commit
+    now: Optional[Callable] = None
+    deferred: Optional[Callable] = None
+    # if True, data was changed while auto was disabled,
+    # so enabling auto commit must call `func`
+    dirty: bool = False
+    # A flag (counter) telling that we're within commit and
+    # super().commit() should not raise an exception
+    commit_depth: int = 0
 
 
 def deferred(func) -> DeferredFunc:
