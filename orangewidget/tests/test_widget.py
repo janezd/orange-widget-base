@@ -514,7 +514,7 @@ class WidgetTestInfoSummary(WidgetTest):
         widget.set_partial_input_summary.assert_called_once()
 
 
-@summarize.register(SignalTypeA)
+@summarize.register
 def summarize(_: SignalTypeA):
     return PartialSummary("foo", "bar")
 

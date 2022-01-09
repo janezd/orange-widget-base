@@ -212,8 +212,8 @@ class WidgetSignalsMixinTest(GuiTest):
         class Str(str):
             pass
 
-        @summarize.register(Str)
-        def _(s):
+        @summarize.register
+        def _(s: Str):
             return PartialSummary(str(s), None)
 
         class TestWidget(OWBaseWidget):
